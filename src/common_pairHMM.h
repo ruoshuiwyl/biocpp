@@ -10,12 +10,21 @@
 
 class CommonPairHMM : public PairHMM {
 
-protected:
+private:
      double ComputeReadLikelihood(std::vector<int8_t> &haplotype_bases, std::vector<int8_t> &read_bases,
                                        std::vector<int8_t> &read_qual, std::vector<int8_t> &read_insert_qual,
                                        std::vector<int8_t> &read_delete_qual, std::vector<int8_t> &overall_gcp,
                                        int32_t haplotype_index);
-};
 
+    void InitializeProbabilities(std::vector<int8_t> &read_insert_qual,
+                                 std::vector<int8_t> &read_delete_qual,
+                                 std::vector<int8_t> &overall_gcp);
+
+    virtual void InitializePriors(std::vector<int8_t> &haplotype_bases,
+                                  std::vector<int8_t> &read_bases,
+                                  std::vector<int8_t> &read_qual,
+                                  int haplotype_index);
+
+};
 
 #endif //BIOCPP_COMMON_PAIRHMM_H
