@@ -24,26 +24,38 @@ public:
         INSERT2INSERT,
         DELETE2DELETE
     };
-
+    void Initialization();
+    std::vector<std::vector<double>>  ComputeLikeliHood();
 
 protected:
-    virtual double ComputeReadLikelihood(std::vector<int8_t> &haplotype_bases, std::vector<int8_t> &read_bases,
-                                             std::vector<int8_t> &read_qual, std::vector<int8_t> &read_insert_qual,
-                                             std::vector<int8_t> &read_delete_qual, std::vector<int8_t> &overall_gcp,
-                                             int32_t haplotype_index);
-    virtual void InitializeProbabilities(std::vector<int8_t> &read_insert_qual, std::vector<int8_t> &read_delete_qual, std::vector<int8_t> &overall_gcp);
-    virtual void InitializePriors(std::vector<int8_t> &haplotype_bases, std::vector<int8_t> &read_bases, std::vector<int8_t> &read_qual, int haplotype_index)
+    double ComputeReadLikelihood(const std::vector<int8_t> *haplotype_bases, const std::vector<int8_t> &read_bases,
+                                         const std::vector<int8_t> &read_qual, const std::vector<int8_t> &read_insert_qual,
+                                         const std::vector<int8_t> &read_delete_qual, const std::vector<int8_t> &overall_gcp,
+                                         const bool recache_read_value, const std::vector<int8_t> *next_haplotype);
+    int32_t FindFristDiffHaplotype(const std::vector<int8_t> *haploype, const std::vector<int8_t> *next_hapotype);
+    virtual double SubComputeReadLikelihood(const std::vector<int8_t> &haplotype_bases, const std::vector<int8_t> &read_bases,
+                                                const std::vector<int8_t> &read_qual, const std::vector<int8_t> &read_insert_qual,
+                                                const std::vector<int8_t> &read_delete_qual, const std::vector<int8_t> &overall_gcp,
+                                                const int32_t haplotype_index, const bool recacheReadValues,
+                                                const int32_t next_haplotype_index);
+
+    virtual void InitializeProbabilities(const std::vector<int8_t> &read_insert_qual,
+                                         const std::vector<int8_t> &read_delete_qual,
+                                         const std::vector<int8_t> &overall_gcp);
+    virtual void InitializePriors(const std::vector<int8_t> &haplotype_bases, const std::vector<int8_t> &read_bases,
+                                  const std::vector<int8_t> &read_qual, const int32_t haplotype_index);
 
 protected:
     std::vector<std::vector<int8_t>> &haplotypes_;
     std::vector<Read> reads_;
-    std::vector<double> likelihood_;
+    std::vector<std::vector<double>> likelihood_;
     int32_t max_haplotype_length_;
     int32_t max_read_length_;
     int32_t pad_max_haplotype_length_;
     int32_t pad_max_read_length_;
     int32_t pad_read_length_;
     int32_t pad_haplotype_length_;
+    int32_t haplotype_index_;
     std::vector<std::vector<double>> match_matrix_;
     std::vector<std::vector<double>> insert_matrix_;
     std::vector<std::vector<double>> delete_matrix_;

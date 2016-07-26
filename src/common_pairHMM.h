@@ -11,19 +11,20 @@
 class CommonPairHMM : public PairHMM {
 
 private:
-     double ComputeReadLikelihood(std::vector<int8_t> &haplotype_bases, std::vector<int8_t> &read_bases,
-                                       std::vector<int8_t> &read_qual, std::vector<int8_t> &read_insert_qual,
-                                       std::vector<int8_t> &read_delete_qual, std::vector<int8_t> &overall_gcp,
-                                       int32_t haplotype_index);
+    double SubComputeReadLikelihood(const std::vector<int8_t> &haplotype_bases, const std::vector<int8_t> &read_bases,
+                                        const std::vector<int8_t> &read_qual, const std::vector<int8_t> &read_insert_qual,
+                                        const std::vector<int8_t> &read_delete_qual, const std::vector<int8_t> &overall_gcp,
+                                        const int32_t haplotype_index, const bool recacheReadValues,
+                                        const int32_t next_haplotype_index);
 
-    void InitializeProbabilities(std::vector<int8_t> &read_insert_qual,
-                                 std::vector<int8_t> &read_delete_qual,
-                                 std::vector<int8_t> &overall_gcp);
+    void InitializeProbabilities(const std::vector<int8_t> &read_insert_qual,
+                                 const std::vector<int8_t> &read_delete_qual,
+                                 const std::vector<int8_t> &overall_gcp);
 
-    virtual void InitializePriors(std::vector<int8_t> &haplotype_bases,
-                                  std::vector<int8_t> &read_bases,
-                                  std::vector<int8_t> &read_qual,
-                                  int haplotype_index);
+    virtual void InitializePriors(const std::vector<int8_t> &haplotype_bases,
+                                  const std::vector<int8_t> &read_bases,
+                                  const std::vector<int8_t> &read_qual,
+                                  const int32_t haplotype_index);
 
 };
 
