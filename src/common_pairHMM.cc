@@ -13,7 +13,7 @@ double CommonPairHMM::SubComputeReadLikelihood(const std::vector<int8_t> &haplot
     if( recacheReadValues ) {
         InitializeProbabilities(read_insert_qual, read_delete_qual, overall_gcp);
     }
-    InitializePriors(haplotype_bases,read_bases,read_qual,haplotype_index);
+    InitializePriors(haplotype_bases, read_bases, read_qual, haplotype_index);
     double init_delete_value = 1.0 / haplotype_bases.size();
     for( int j = 0; j < pad_haplotype_length_; ++j){
         delete_matrix_[0][j] = init_delete_value;
@@ -38,7 +38,7 @@ void CommonPairHMM::InitializeProbabilities(const std::vector<int8_t> &read_inse
                                             const std::vector<int8_t> &overall_gcp) {
     int read_length = read_insert_qual.size();
     for( int i = 0; i != read_length; ++i ){
-        transition_[i+1][MATCH2MATCH]  = 1.0 - Quality::ProbError(read_insert_qual[i]) - Quality::ProbError(read_delete_qual[i]));
+        transition_[i+1][MATCH2MATCH]  = 1.0 - (Quality::ProbError(read_insert_qual[i]) + Quality::ProbError(read_delete_qual[i]));
         transition_[i+1][MATCH2INSERT] = Quality::ProbError(read_insert_qual[i]);
         transition_[i+1][MATCH2DELETE] = Quality::ProbError(read_delete_qual[i]);
         transition_[i+1][INSERT2MATCH] = 1.0 - Quality::ProbError(overall_gcp[i]);

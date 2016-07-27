@@ -47,18 +47,22 @@ void PairHMM::Initialization() {
 }
 
 std::vector<std::vector<double>> PairHMM::ComputeLikeliHood() {
+    int32_t read_count = 0;
         for ( auto it = reads_.begin(); it != reads_.end(); ++it ){
-            const std::vector &read_bases = it->GetReadBases();
-            const std::vector &read_qual = it->GetReadBaseQualities();
-            const std::vector &insert_qual = it->GetReadInsertQualities();
-            const std::vector &delete_qual = it->GetReadDeleteQualities();
-            const std::vector &gcp_qual = it->GetReadGCPQualities();
-            const bool is_first_haplotype = true;
-            for( int i = 0; i != haplotypes_.size(); ++i ){
-                std::vector<int8_t> *haplotype = &haplotypes_[i];
-                std::vector<int8_t> *next_haplotype = i == haplotypes_.size() - 1 ? nullptr : &haplotypes_[i+1];
+            const std::vector<int8_t> &read_bases = it->GetReadBases();
+            const std::vector<int8_t> &read_qual = it->GetReadBaseQualities();
+            const std::vector<int8_t> &insert_qual = it->GetReadInsertQualities();
+            const std::vector<int8_t> &delete_qual = it->GetReadDeleteQualities();
+            const std::vector<int8_t> &gcp_qual = it->GetReadGCPQualities();
+            bool is_first_haplotype = true;
+            for( int j = 0; j != haplotypes_.size(); ++j ){
+                std::vector<int8_t> *haplotype = &haplotypes_[j];
+                std::vector<int8_t> *next_haplotype = j == haplotypes_.size() - 1 ? nullptr : &haplotypes_[j+1];
                 double lk = ComputeReadLikelihood(haplotype, read_bases, read_qual, insert_qual, delete_qual, gcp_qual, is_first_haplotype, next_haplotype);
+                likelihood_[read_count][j] = lk;
+                is_first_haplotype = false;
             }
+            read_count++;
         }
 }
 double PairHMM::ComputeReadLikelihood(const std::vector<int8_t> *haplotype_bases, const std::vector<int8_t> &read_bases,

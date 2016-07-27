@@ -10,42 +10,25 @@
 #include <cstdint>
 #include <cmath>
 
-class Quality {
-
-};
-
-class Quality {
+ class Quality {
 public:
+     Quality () {
+         prob_error_.reserve(128);
+         prob_.reserve(128);
+         for (int i = 0; i != 128; ++i) {
+             prob_error_[i] = pow(10.0, -i / 10.0);
+             prob_[i] = 1.0 - prob_error_[i];
+         }
+     }
     static double ProbError(int8_t qual) {
-        if (init_ = false) {
-            prob_error_.reserve(128);
-            prob_.reserve(128);
-            for (int i = 0; i != 128; ++i) {
-                prob_error_[i] = pow(10.0, -i / 10.0);
-                prob_[i] = 1 - prob_error_[i];
-            }
-            init_ = true;
-        }
         double prob_error_[qual];
     }
-
     static double Prob(int8_t qual) {
-        if (init_ = false) {
-            prob_error_.reserve(128);
-            prob_.reserve(128);
-            for (int i = 0; i != 128; ++i) {
-                prob_error_[i] = pow(10.0, -i / 10.0);
-                prob_[i] = 1 - prob_error_[i];
-            }
-            init_ = true;
-        }
         double prob_[qual];
     }
-
 private:
     static std::vector<double> prob_error_;
     static std::vector<double> prob_;
-    static bool init_ = false;
 };
 
 #endif //BIOCPP_UTIL_H
