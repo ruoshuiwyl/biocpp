@@ -56,7 +56,7 @@ int SWAlignment::SWAlign(const char *ref,
                 best_size_h[i]++;
             }
             int32_t step_right = best_gap_h[i];
-            bool diaghighest = (step_diag >= step_down) && step_diag >= step_right);
+            bool diaghighest = (step_diag >= step_down) && (step_diag >= step_right);
             if (diaghighest){
                 curr_row[j] = step_diag > 0 ? step_diag : 0;
             } else if (step_right >= step_down) {
@@ -77,7 +77,9 @@ int SWAlignment::SWAlign(const char *ref,
             }
     }
 
-    for( int begin = max_score_index, end = qlen; begin > 0; --begin)
+    for( int begin = max_score_index, end = qlen; begin > 0; --begin){
+        ;
+    }
 
 
 

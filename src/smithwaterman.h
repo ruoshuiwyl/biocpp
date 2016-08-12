@@ -31,11 +31,11 @@ public:
     int32_t SWAlign(const char *ref, const int32_t rlen, const char *query, const int32_t qlen, ALignment &sw_align) ;
 
 private:
-    const int32_t kGapDeleteOpen;
-    const int32_t kGapInsertOpen;
-    const int32_t kGapExtension;
-    const int32_t kMatch;
-    const int32_t kMisMath;
+    const int32_t kGapDeleteOpen = 0.0;
+    const int32_t kGapInsertOpen = 0.0;
+    const int32_t kGapExtension = 0.0;
+    const int32_t kMatch = 0.0 ;
+    const int32_t kMisMath = 0.0;
     int32_t  *score_matrix_;
     int32_t  score_matrix_size_;
     char  *ref_;
