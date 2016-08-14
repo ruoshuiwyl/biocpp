@@ -14,18 +14,18 @@
 class PairHMM {
 public:
     PairHMM( std::vector<std::vector<char>> &haplotypes, std::vector<Read> &reads);
-    void Initialization();
     virtual int ComputeLikeliHood(std::vector<double> &result) = 0;
 
 
 protected:
+    virtual  void Initialization();
     virtual  void QualToTransProb(const std::vector<char> &read_insert_quals,
                                   const std::vector<char> &read_delete_quals,
                                   const std::vector<char> &read_gcp_quals) = 0;
     const int32_t FoundNextHaplotypeIndex(std::vector<char> &prev_hc, std::vector<char> &curr_hc, int curr_hc_index);
-    int32_t FindFristDiffHaplotype(const std::vector<char> *haploype, const std::vector<char> *next_hapotype);
+//    int32_t FindFristDiffHaplotype(const std::vector<char> *haploype, const std::vector<char> *next_hapotype);
     inline const int32_t GetMatrixIndex(int row , int col){
-        return row * pad_haplotype_length_ + col;
+        return row * pad_max_haplotype_length_ + col;
     };
     inline const int32_t GetMatrixIndex(int row, int col, int col_num){
         return row * col_num + col;
@@ -39,7 +39,7 @@ protected:
     int32_t pad_max_read_length_;
     int32_t pad_read_length_;
     int32_t pad_haplotype_length_;
-    int32_t haplotype_index_;
+//    int32_t haplotype_index_;
     const int32_t kPadSize = 1;
     const int32_t kMatchToMatch = 0;
     const int32_t kIndelToMatch = 1;
