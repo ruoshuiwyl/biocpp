@@ -11,6 +11,7 @@
 
 class Read {
 public:
+    Read(){};
     Read (std::vector<char> &bases_,
           std::vector<char> &base_qualities_,
           std::vector<char> &insert_qualities_,
@@ -34,6 +35,26 @@ public:
     }
     int32_t GetLength() {
         return bases_.size();
+    }
+
+    void set_bases(std::string &bases){
+        for( int i = 0; i < bases.size(); ++i ) {
+            bases_.push_back(bases[i]);
+        }
+    }
+    void set_quals(std::string &quals) {
+        for( int i = 0; i < quals.size(); ++i ) {
+            base_qualities_.push_back(quals[i] - kQualityOffset);
+        }
+    }
+    void set_ins_quals(std::vector<char> &ins_quals){
+        insert_qualities_ = ins_quals;
+    }
+    void set_del_quals(std::vector<char> &del_quals){
+        delete_qualities_ = del_quals;
+    }
+    void set_gcp_quals(std::vector<char> &gcp_qualitis) {
+        gcp_qualities_ = gcp_qualitis;
     }
     std::vector<char> & GetReadBases() { return bases_;};
     std::vector<char> & GetReadBaseQualities() { return base_qualities_;};

@@ -22,7 +22,7 @@ protected:
     virtual  void QualToTransProb(const std::vector<char> &read_insert_quals,
                                   const std::vector<char> &read_delete_quals,
                                   const std::vector<char> &read_gcp_quals) = 0;
-    const int32_t FoundNextHaplotypeIndex(std::vector<char> &prev_hc, std::vector<char> &curr_hc, int curr_hc_index);
+    const int32_t FoundNextHaplotypeIndex(std::vector<char> &prev_hc, std::vector<char> &curr_hc);
 //    int32_t FindFristDiffHaplotype(const std::vector<char> *haploype, const std::vector<char> *next_hapotype);
     inline const int32_t GetMatrixIndex(int row , int col){
         return row * pad_max_haplotype_length_ + col;

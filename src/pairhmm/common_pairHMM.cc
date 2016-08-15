@@ -29,7 +29,7 @@ int CommonPairHMM::ComputeLikeliHood(std::vector<double> &result) {
         int next_haplotype_index = 0;
         for( int j = 0; j < haplotypes_.size(); ++j){
             std::vector<char> &haplotype_bases = haplotypes_[j];
-            next_haplotype_index = PairHMM::FoundNextHaplotypeIndex(prev_haplotype_bases_,haplotype_bases, next_haplotype_index);
+            next_haplotype_index = PairHMM::FoundNextHaplotypeIndex(prev_haplotype_bases_, haplotype_bases);
             double lk = subComputeReadLikelihoodGivenHaplotype(haplotype_bases, read_bases, read_quals, read_insert_quals,
                                                                read_delete_quals, read_gcp_quals, next_haplotype_index);
             result[GetMatrixIndex(j, i, reads_.size())] = lk;

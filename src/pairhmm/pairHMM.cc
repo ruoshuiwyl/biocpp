@@ -51,14 +51,8 @@ void PairHMM::Initialization() {
 //}
 
 
-const int32_t PairHMM::FoundNextHaplotypeIndex(std::vector<char> &prev_hc, std::vector<char> &curr_hc,
-                                               int curr_hc_index) {
-    if (prev_hc.empty()) {
-        return 0;
-    }
-    if( curr_hc.size() != prev_hc.size()){
-        return 0;
-    }
+const int32_t PairHMM::FoundNextHaplotypeIndex(std::vector<char> &prev_hc, std::vector<char> &curr_hc) {
+
     int index = 0;
     for ( int i = 0; i < curr_hc.size(); ++i ) {
         if (prev_hc[i] != curr_hc[i]) {
@@ -66,7 +60,7 @@ const int32_t PairHMM::FoundNextHaplotypeIndex(std::vector<char> &prev_hc, std::
             break;
         }
     }
-    assert( index < curr_hc.size());
-    return index < curr_hc_index? index : curr_hc_index;
+
+    return index;
 }
 

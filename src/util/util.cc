@@ -87,10 +87,10 @@ double MathUtils::ApproximateLog10SumLog10(double small, double big) {
         small = t;
     }
 
-    if (small == DBL_MIN || big == DBL_MIN)
+    if (small == -DBL_MAX || big == -DBL_MAX)
         return big;
 
-    const double diff = big - small;
+    const double diff = fabs(big - small);
     if (diff >= JacobianLogTable::MAX_TOLERANCE)
         return big;
     return big + JacobianLogTable::get(diff);
