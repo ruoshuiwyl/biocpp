@@ -150,8 +150,8 @@ TEST(PairHMM, CommonPairHMM){
     haplotypes.push_back(haplotype1);
     haplotypes.push_back(haplotype2);
     std::vector<double> result;
-//    PairHMM *pairhmm = new CommonPairHMM(haplotypes, reads);
-    PairHMM *pairhmm = new Log10_PairHMM(haplotypes, reads);
+    PairHMM *pairhmm = new CommonPairHMM(haplotypes, reads);
+//    PairHMM *pairhmm = new Log10_PairHMM(haplotypes, reads);
     pairhmm->ComputeLikeliHood(result);
     for ( auto r : result) {
         std::cout << r << std::endl;

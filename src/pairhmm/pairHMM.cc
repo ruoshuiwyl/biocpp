@@ -28,27 +28,11 @@ void PairHMM::Initialization() {
     pad_max_read_length_ = max_read_length_ + kPadSize;
 
     prior_.resize(pad_max_haplotype_length_ * pad_max_read_length_, 0.0);
-//    match_matrix_.resize(pad_max_read_length_ * pad_max_haplotype_length_, 0.0);
-//    insert_matrix_.resize(pad_max_read_length_ * pad_max_haplotype_length_, 0.0);
-//    delete_matrix_.resize(pad_max_read_length_ * pad_max_haplotype_length_, 0.0);
     for ( int i = 0; i < kTransitionMartixLength; ++i ) {
         transition_[i].resize(pad_max_read_length_, 0.0);
     }
 }
 
-
-//int32_t PairHMM::FindFristDiffHaplotype(const std::vector<char> *haploype,
-//                                        const std::vector<char> *next_hapotype) {
-//    assert( haploype != nullptr );
-//    assert( next_hapotype != nullptr );
-//    assert( haploype->size() && next_hapotype->size());
-//    for( int i = 0; i < haploype->size() && i < next_hapotype->size(); ++i  ){
-//        if( haploype[i] != next_hapotype[i] ){
-//            return i;
-//        }
-//    }
-//    return haploype->size();
-//}
 
 
 const int32_t PairHMM::FoundNextHaplotypeIndex(std::vector<char> &prev_hc, std::vector<char> &curr_hc) {

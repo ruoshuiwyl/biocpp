@@ -30,6 +30,7 @@ private:
                                                   const std::vector<char> &read_gcp_quals,
                                                   const int32_t hap_start_index);
     const double INV_LN10 = 0.43429448190325176;
+    const double kLog3 = 0.47712125471966244;
 };
 
 

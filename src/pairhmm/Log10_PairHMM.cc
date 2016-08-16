@@ -2,6 +2,7 @@
 // Created by ruoshui on 7/24/16.
 //
 
+#include <iostream>
 #include "Log10_PairHMM.h"
 #include "../util/util.h"
 
@@ -58,7 +59,7 @@ double Log10_PairHMM::subComputeReadLikelihoodGivenHaplotype(const std::vector<c
         for (int j = 0; j < haplotype_bases.size(); ++j) {
             const char hbase = haplotype_bases[j];
             prior_[GetMatrixIndex(i + 1, j + 1)] = ( rbase == hbase || rbase == 'N' || hbase == 'N' ) ?
-                                                   Quality::ProbLog10(qual) : Quality::ProbErrorLog10(qual);
+                                                   Quality::ProbLog10(qual) : Quality::ProbErrorLog10(qual)- kLog3;
         }
     }
     pad_haplotype_length_ = haplotype_bases.size() + 1;
@@ -85,13 +86,15 @@ double Log10_PairHMM::subComputeReadLikelihoodGivenHaplotype(const std::vector<c
                     match_matrix_[GetMatrixIndex(i, j-1)] + transition_[kMatchToDelete][i],
                     delete_matrix_[GetMatrixIndex(i, j-1)] + transition_[kDeleteToDelete][i]
             );
+//            std::cout << i << "\t" << j << "\t" << match_matrix_[GetMatrixIndex(i, j)] << "\t" << insert_matrix_[GetMatrixIndex(i, j)] <<"\t"
+//                      << delete_matrix_[GetMatrixIndex(i, j)] << std::endl;
         }
     }
 
     const int32_t endI = pad_read_length_ - 1;
-    double final_sum_prob = MathUtils::ApproximateLog10SumLog10(match_matrix_[GetMatrixIndex(endI, 0)], insert_matrix_[GetMatrixIndex(endI, 0)]);
+    double final_sum_prob = MathUtils::ApproximateLog10SumLog10(match_matrix_[GetMatrixIndex(endI, 1)], insert_matrix_[GetMatrixIndex(endI, 1)]);
     for( int i = 2; i < pad_haplotype_length_; ++i) {
-        final_sum_prob += MathUtils::ApproximateLog10SumLog10( final_sum_prob, match_matrix_[GetMatrixIndex(endI, i)] ,  insert_matrix_[GetMatrixIndex(endI, i)]);
+        final_sum_prob = MathUtils::ApproximateLog10SumLog10( final_sum_prob, match_matrix_[GetMatrixIndex(endI, i)] ,  insert_matrix_[GetMatrixIndex(endI, i)]);
     }
     return final_sum_prob;
 }
