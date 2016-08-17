@@ -2,6 +2,7 @@
 // Created by ruoshui on 7/25/16.
 //
 
+#include <iostream>
 #include "util.h"
 
 static std::vector<double> prob_error_;
@@ -116,4 +117,9 @@ double MathUtils::ApproximateLog10SumLog10(std::vector<double> vals) {
 
     }
     return approx_sum;
+}
+
+std::ostream& operator<<(std::ostream &os, const CigarElem &c) {
+    os << c.length_ << kCigarOpString[int(c.operation_)];
+    return os;
 }

@@ -125,4 +125,5 @@ int Log10_PairHMM::ComputeLikeliHood(std::vector<double> &result) {
         }
     }
     return result.size();
+
 }
